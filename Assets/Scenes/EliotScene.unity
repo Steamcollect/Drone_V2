@@ -639,7 +639,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distance: 1.3
   sensitivity: 1000
+  posOffset: {x: 0, y: 0.6, z: 0}
   minMaxY: {x: -50, y: 50}
+  inverseYAxis: 0
   target: {fileID: 1310888593}
 --- !u!1 &1310888592 stripped
 GameObject:
@@ -1078,7 +1080,6 @@ Transform:
   - {fileID: 1893981925}
   - {fileID: 954164582}
   - {fileID: 901695941}
-  - {fileID: 1310888593}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2117519426
@@ -1087,7 +1088,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 2044497884}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 0405477fbed96af41b17fd3111c57608, type: 3}
       propertyPath: m_LocalScale.x
@@ -1172,4 +1173,5 @@ SceneRoots:
   m_Roots:
   - {fileID: 963194228}
   - {fileID: 705507995}
+  - {fileID: 2117519426}
   - {fileID: 2044497884}

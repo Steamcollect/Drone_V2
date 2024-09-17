@@ -9,9 +9,15 @@ public class CameraController : MonoBehaviour
     [SerializeField] float distance;
     [SerializeField] float sensitivity;
 
+    [Space(5)]
+
     [SerializeField] Vector3 posOffset;
 
     [SerializeField] Vector2 minMaxY;
+
+    [Space(10)]
+    
+    [SerializeField] bool inverseYAxis;
 
     float currentX, currentY;
 
@@ -21,7 +27,9 @@ public class CameraController : MonoBehaviour
     private void LateUpdate()
     {
         currentX += Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
-        currentY += Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
+
+        float y = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
+        currentY += inverseYAxis ? -y : y;
 
         currentY = Mathf.Clamp(currentY, minMaxY.x, minMaxY.y);
 
