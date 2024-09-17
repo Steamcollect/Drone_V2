@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Statitics")]
-    [SerializeField] float moveSpeed;
+    [SerializeField] float horizontalSpeed;
+    [SerializeField] float verticalSpeed;
 
     [Header("References")]
     [SerializeField] Rigidbody rb;
@@ -14,19 +15,30 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        MoveHorizontaly();
+        Move();
     }
 
-    void MoveHorizontaly()
+    void Move()
     {
-        Vector3 direction = motor.GetInputs().normalized;
+        Vector3 horizontalInput = motor.GetHorizontalInputs().normalized;
+        float verticalInput = motor.GetVerticalInput();
 
-        if (direction.magnitude >= .1f)
+        Vector3 horizontalDir = Vector3.zero;
+        Vector3 verticalDir = Vector3.zero;
+
+        // Horizontal
+        if (horizontalInput.magnitude >= .1f)
         {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + (cam.transform.eulerAngles.y);
+            float targetAngle = Mathf.Atan2(horizontalInput.x, horizontalInput.z) * Mathf.Rad2Deg + (cam.transform.eulerAngles.y);
+            horizontalDir = (Quaternion.Euler(0, targetAngle, 0) * Vector3.forward).normalized * horizontalSpeed;
+        }
+        // Vertical
+        if(verticalInput != 0)
+        {
+            verticalDir = Vector3.up * motor.GetVerticalInput() * verticalSpeed;
+        }
 
-            Vector3 moveDir = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
-            rb.AddForce(moveDir.normalized * moveSpeed);
-        }        
+        rb.AddForce(horizontalDir + verticalDir);
+
     }
 }
